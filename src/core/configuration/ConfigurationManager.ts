@@ -2,15 +2,16 @@
 import { NitroManager } from '../common';
 import { ConfigurationEvent } from './ConfigurationEvent';
 
-export class ConfigurationManager extends NitroManager implements IConfigurationManager
+export class ConfigurationManager
+    extends NitroManager
+    implements IConfigurationManager
 {
     private _definitions: Map<string, unknown>;
     private _config: any;
     private _pendingUrls: string[];
     private _missingKeys: string[];
 
-    constructor()
-    {
+    constructor() {
         super();
 
         this._definitions = new Map();
@@ -21,19 +22,17 @@ export class ConfigurationManager extends NitroManager implements IConfiguration
         this.onConfigurationLoaded = this.onConfigurationLoaded.bind(this);
     }
 
-    protected onInit(): void
-    {
+    protected onInit(): void {
         NitroConfiguration.parseConfiguration(this.getDefaultConfig(), true);
 
-        this._pendingUrls = NitroConfiguration.getValue<string[]>('config.urls').slice();
+        this._pendingUrls =
+            NitroConfiguration.getValue<string[]>('config.urls').slice();
 
         this.loadNextConfiguration();
     }
 
-    private loadNextConfiguration(): void
-    {
-        if(!this._pendingUrls.length)
-        {
+    private loadNextConfiguration(): void {
+        if (!this._pendingUrls.length) {
             this.dispatchConfigurationEvent(ConfigurationEvent.LOADED);
 
             return;
@@ -42,51 +41,49 @@ export class ConfigurationManager extends NitroManager implements IConfiguration
         this.loadConfigurationFromUrl(this._pendingUrls[0]);
     }
 
-    public loadConfigurationFromUrl(url: string): void
-    {
-        if(!url || (url === ''))
-        {
+    public loadConfigurationFromUrl(url: string): void {
+        if (!url || url === '') {
+            console.log('loadConfigurationFromUrl -> url', url);
             this.dispatchConfigurationEvent(ConfigurationEvent.FAILED);
 
             return;
         }
 
         fetch(url)
-            .then(response => response.json())
-            .then(data => this.onConfigurationLoaded(data, url))
-            .catch(err => this.onConfigurationFailed(err));
+            .then((response) => response.json())
+            .then((data) => this.onConfigurationLoaded(data, url))
+            .catch((err) => this.onConfigurationFailed(err));
     }
 
-    private onConfigurationLoaded(data: { [index: string]: any }, url: string): void
-    {
-        if(!data) return;
+    private onConfigurationLoaded(
+        data: { [index: string]: any },
+        url: string,
+    ): void {
+        if (!data) return;
 
-        if(NitroConfiguration.parseConfiguration(data))
-        {
+        if (NitroConfiguration.parseConfiguration(data)) {
             const index = this._pendingUrls.indexOf(url);
 
-            if(index >= 0) this._pendingUrls.splice(index, 1);
+            if (index >= 0) this._pendingUrls.splice(index, 1);
 
             this.loadNextConfiguration();
 
             return;
         }
 
+        console.log('onConfigurationLoaded -> data', data);
         this.dispatchConfigurationEvent(ConfigurationEvent.FAILED);
     }
 
-    private onConfigurationFailed(error: Error): void
-    {
+    private onConfigurationFailed(error: Error): void {
         this.dispatchConfigurationEvent(ConfigurationEvent.FAILED);
     }
 
-    private dispatchConfigurationEvent(type: string): void
-    {
+    private dispatchConfigurationEvent(type: string): void {
         this.events && this.events.dispatchEvent(new ConfigurationEvent(type));
     }
 
-    public getDefaultConfig(): { [index: string]: any }
-    {
+    public getDefaultConfig(): { [index: string]: any } {
         //@ts-ignore
         return NitroConfig as { [index: string]: any };
     }
