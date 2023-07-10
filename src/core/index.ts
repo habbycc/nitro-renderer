@@ -6,4 +6,5 @@ export * from './communication/codec';
 export * from './communication/codec/evawire';
 export * from './communication/messages';
 export * from './configuration';
+export * from './utils/WebGL';
 export * from './utils/proxy/NitroAdjustmentFilter';
