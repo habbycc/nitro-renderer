@@ -1,21 +1,20 @@
 import { IMessageComposer } from '../../../../../api';
 
-export class GroupAdminTakeComposer implements IMessageComposer<ConstructorParameters<typeof GroupAdminTakeComposer>>
+export class GroupAdminTakeComposer
+  implements
+    IMessageComposer<ConstructorParameters<typeof GroupAdminTakeComposer>>
 {
-    private _data: ConstructorParameters<typeof GroupAdminTakeComposer>;
+  private _data: ConstructorParameters<typeof GroupAdminTakeComposer>;
 
-    constructor(groupId: number, memberId: number)
-    {
-        this._data = [groupId, memberId];
-    }
+  constructor(groupId: number, memberId: number) {
+    this._data = [groupId, memberId];
+  }
 
-    public getMessageArray()
-    {
-        return this._data;
-    }
+  public getMessageArray() {
+    return this._data;
+  }
 
-    public dispose(): void
-    {
-        return;
-    }
+  public dispose(): void {
+    return;
+  }
 }

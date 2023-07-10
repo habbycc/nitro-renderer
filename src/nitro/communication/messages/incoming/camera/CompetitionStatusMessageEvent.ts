@@ -2,15 +2,15 @@ import { IMessageEvent } from '../../../../../api';
 import { MessageEvent } from '../../../../../events';
 import { CompetitionStatusMessageParser } from '../../parser';
 
-export class CompetitionStatusMessageEvent extends MessageEvent implements IMessageEvent
+export class CompetitionStatusMessageEvent
+  extends MessageEvent
+  implements IMessageEvent
 {
-    constructor(callBack: Function)
-    {
-        super(callBack, CompetitionStatusMessageParser);
-    }
+  constructor(callBack: Function) {
+    super(callBack, CompetitionStatusMessageParser);
+  }
 
-    public getParser(): CompetitionStatusMessageParser
-    {
-        return this.parser as CompetitionStatusMessageParser;
-    }
+  public getParser(): CompetitionStatusMessageParser {
+    return this.parser as CompetitionStatusMessageParser;
+  }
 }

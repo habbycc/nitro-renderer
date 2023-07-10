@@ -1,21 +1,20 @@
 import { IMessageComposer } from '../../../../../../api';
 
-export class GoToFlatMessageComposer implements IMessageComposer<ConstructorParameters<typeof GoToFlatMessageComposer>>
+export class GoToFlatMessageComposer
+  implements
+    IMessageComposer<ConstructorParameters<typeof GoToFlatMessageComposer>>
 {
-    private _data: ConstructorParameters<typeof GoToFlatMessageComposer>;
+  private _data: ConstructorParameters<typeof GoToFlatMessageComposer>;
 
-    constructor(roomId: number)
-    {
-        this._data = [roomId];
-    }
+  constructor(roomId: number) {
+    this._data = [roomId];
+  }
 
-    public getMessageArray()
-    {
-        return this._data;
-    }
+  public getMessageArray() {
+    return this._data;
+  }
 
-    public dispose(): void
-    {
-        return;
-    }
+  public dispose(): void {
+    return;
+  }
 }

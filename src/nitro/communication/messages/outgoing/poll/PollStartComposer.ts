@@ -1,21 +1,19 @@
 import { IMessageComposer } from '../../../../../api';
 
-export class PollStartComposer implements IMessageComposer<ConstructorParameters<typeof PollStartComposer>>
+export class PollStartComposer
+  implements IMessageComposer<ConstructorParameters<typeof PollStartComposer>>
 {
-    private _data: ConstructorParameters<typeof PollStartComposer>;
+  private _data: ConstructorParameters<typeof PollStartComposer>;
 
-    constructor(k: number)
-    {
-        this._data = [k];
-    }
+  constructor(k: number) {
+    this._data = [k];
+  }
 
-    public getMessageArray()
-    {
-        return this._data;
-    }
+  public getMessageArray() {
+    return this._data;
+  }
 
-    public dispose(): void
-    {
-        return;
-    }
+  public dispose(): void {
+    return;
+  }
 }

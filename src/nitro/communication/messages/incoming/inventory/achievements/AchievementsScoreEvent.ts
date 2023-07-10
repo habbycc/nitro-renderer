@@ -2,15 +2,15 @@
 import { MessageEvent } from '../../../../../../events';
 import { AchievementsScoreParser } from '../../../parser';
 
-export class AchievementsScoreEvent extends MessageEvent implements IMessageEvent
+export class AchievementsScoreEvent
+  extends MessageEvent
+  implements IMessageEvent
 {
-    constructor(callBack: Function)
-    {
-        super(callBack, AchievementsScoreParser);
-    }
+  constructor(callBack: Function) {
+    super(callBack, AchievementsScoreParser);
+  }
 
-    public getParser(): AchievementsScoreParser
-    {
-        return this.parser as AchievementsScoreParser;
-    }
+  public getParser(): AchievementsScoreParser {
+    return this.parser as AchievementsScoreParser;
+  }
 }

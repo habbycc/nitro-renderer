@@ -2,15 +2,15 @@ import { IMessageEvent } from '../../../../../../api';
 import { MessageEvent } from '../../../../../../events';
 import { RequestSpamWallPostItMessageParser } from '../../../parser';
 
-export class RequestSpamWallPostItMessageEvent extends MessageEvent implements IMessageEvent
+export class RequestSpamWallPostItMessageEvent
+  extends MessageEvent
+  implements IMessageEvent
 {
-    constructor(callBack: Function)
-    {
-        super(callBack, RequestSpamWallPostItMessageParser);
-    }
+  constructor(callBack: Function) {
+    super(callBack, RequestSpamWallPostItMessageParser);
+  }
 
-    public getParser(): RequestSpamWallPostItMessageParser
-    {
-        return this.parser as RequestSpamWallPostItMessageParser;
-    }
+  public getParser(): RequestSpamWallPostItMessageParser {
+    return this.parser as RequestSpamWallPostItMessageParser;
+  }
 }

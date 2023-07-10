@@ -1,21 +1,24 @@
 import { IMessageComposer } from '../../../../../api';
 
-export class GetPendingCallsForHelpMessageComposer implements IMessageComposer<ConstructorParameters<typeof GetPendingCallsForHelpMessageComposer>>
+export class GetPendingCallsForHelpMessageComposer
+  implements
+    IMessageComposer<
+      ConstructorParameters<typeof GetPendingCallsForHelpMessageComposer>
+    >
 {
-    private _data: ConstructorParameters<typeof GetPendingCallsForHelpMessageComposer>;
+  private _data: ConstructorParameters<
+    typeof GetPendingCallsForHelpMessageComposer
+  >;
 
-    constructor()
-    {
-        this._data = [];
-    }
+  constructor() {
+    this._data = [];
+  }
 
-    public getMessageArray()
-    {
-        return this._data;
-    }
+  public getMessageArray() {
+    return this._data;
+  }
 
-    public dispose(): void
-    {
-        return;
-    }
+  public dispose(): void {
+    return;
+  }
 }

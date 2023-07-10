@@ -1,21 +1,22 @@
 import { IMessageComposer } from '../../../../../api';
 
-export class CanCreateRoomMessageComposer implements IMessageComposer<ConstructorParameters<typeof CanCreateRoomMessageComposer>>
+export class CanCreateRoomMessageComposer
+  implements
+    IMessageComposer<
+      ConstructorParameters<typeof CanCreateRoomMessageComposer>
+    >
 {
-    private _data: ConstructorParameters<typeof CanCreateRoomMessageComposer>;
+  private _data: ConstructorParameters<typeof CanCreateRoomMessageComposer>;
 
-    constructor()
-    {
-        this._data = [];
-    }
+  constructor() {
+    this._data = [];
+  }
 
-    public getMessageArray()
-    {
-        return this._data;
-    }
+  public getMessageArray() {
+    return this._data;
+  }
 
-    public dispose(): void
-    {
-        return;
-    }
+  public dispose(): void {
+    return;
+  }
 }

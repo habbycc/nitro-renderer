@@ -1,21 +1,20 @@
 import { IMessageComposer } from '../../../../../api';
 
-export class GetCraftingRecipeComposer implements IMessageComposer<ConstructorParameters<typeof GetCraftingRecipeComposer>>
+export class GetCraftingRecipeComposer
+  implements
+    IMessageComposer<ConstructorParameters<typeof GetCraftingRecipeComposer>>
 {
-    private _data: ConstructorParameters<typeof GetCraftingRecipeComposer>;
+  private _data: ConstructorParameters<typeof GetCraftingRecipeComposer>;
 
-    constructor(k: string)
-    {
-        this._data = [k];
-    }
+  constructor(k: string) {
+    this._data = [k];
+  }
 
-    public getMessageArray()
-    {
-        return this._data;
-    }
+  public getMessageArray() {
+    return this._data;
+  }
 
-    public dispose(): void
-    {
-        return;
-    }
+  public dispose(): void {
+    return;
+  }
 }

@@ -2,15 +2,15 @@ import { IMessageEvent } from '../../../../../api';
 import { MessageEvent } from '../../../../../events';
 import { QuizDataMessageParser } from '../../parser';
 
-export class QuizDataMessageEvent extends MessageEvent implements IMessageEvent
+export class QuizDataMessageEvent
+  extends MessageEvent
+  implements IMessageEvent
 {
-    constructor(callBack: Function)
-    {
-        super(callBack, QuizDataMessageParser);
-    }
+  constructor(callBack: Function) {
+    super(callBack, QuizDataMessageParser);
+  }
 
-    public getParser(): QuizDataMessageParser
-    {
-        return this.parser as QuizDataMessageParser;
-    }
+  public getParser(): QuizDataMessageParser {
+    return this.parser as QuizDataMessageParser;
+  }
 }

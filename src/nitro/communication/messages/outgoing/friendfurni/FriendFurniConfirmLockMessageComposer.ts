@@ -1,21 +1,24 @@
 import { IMessageComposer } from '../../../../../api';
 
-export class FriendFurniConfirmLockMessageComposer implements IMessageComposer<ConstructorParameters<typeof FriendFurniConfirmLockMessageComposer>>
+export class FriendFurniConfirmLockMessageComposer
+  implements
+    IMessageComposer<
+      ConstructorParameters<typeof FriendFurniConfirmLockMessageComposer>
+    >
 {
-    private _data: ConstructorParameters<typeof FriendFurniConfirmLockMessageComposer>;
+  private _data: ConstructorParameters<
+    typeof FriendFurniConfirmLockMessageComposer
+  >;
 
-    constructor(itemId: number, confirmed: boolean)
-    {
-        this._data = [itemId, confirmed];
-    }
+  constructor(itemId: number, confirmed: boolean) {
+    this._data = [itemId, confirmed];
+  }
 
-    public getMessageArray()
-    {
-        return this._data;
-    }
+  public getMessageArray() {
+    return this._data;
+  }
 
-    public dispose(): void
-    {
-        return;
-    }
+  public dispose(): void {
+    return;
+  }
 }

@@ -1,21 +1,20 @@
 import { IMessageComposer } from '../../../../../api';
 
-export class GroupBadgePartsComposer implements IMessageComposer<ConstructorParameters<typeof GroupBadgePartsComposer>>
+export class GroupBadgePartsComposer
+  implements
+    IMessageComposer<ConstructorParameters<typeof GroupBadgePartsComposer>>
 {
-    private _data: ConstructorParameters<typeof GroupBadgePartsComposer>;
+  private _data: ConstructorParameters<typeof GroupBadgePartsComposer>;
 
-    constructor()
-    {
-        this._data = [];
-    }
+  constructor() {
+    this._data = [];
+  }
 
-    public getMessageArray()
-    {
-        return this._data;
-    }
+  public getMessageArray() {
+    return this._data;
+  }
 
-    public dispose(): void
-    {
-        return;
-    }
+  public dispose(): void {
+    return;
+  }
 }

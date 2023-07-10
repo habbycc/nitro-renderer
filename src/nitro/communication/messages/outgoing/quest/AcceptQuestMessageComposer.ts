@@ -1,21 +1,20 @@
 import { IMessageComposer } from '../../../../../api';
 
-export class AcceptQuestMessageComposer implements IMessageComposer<ConstructorParameters<typeof AcceptQuestMessageComposer>>
+export class AcceptQuestMessageComposer
+  implements
+    IMessageComposer<ConstructorParameters<typeof AcceptQuestMessageComposer>>
 {
-    private _data: ConstructorParameters<typeof AcceptQuestMessageComposer>;
+  private _data: ConstructorParameters<typeof AcceptQuestMessageComposer>;
 
-    constructor(k: number)
-    {
-        this._data = [k];
-    }
+  constructor(k: number) {
+    this._data = [k];
+  }
 
-    public getMessageArray()
-    {
-        return this._data;
-    }
+  public getMessageArray() {
+    return this._data;
+  }
 
-    public dispose(): void
-    {
-        return;
-    }
+  public dispose(): void {
+    return;
+  }
 }

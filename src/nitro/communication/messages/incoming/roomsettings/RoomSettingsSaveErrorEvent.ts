@@ -2,15 +2,15 @@ import { IMessageEvent } from '../../../../../api';
 import { MessageEvent } from '../../../../../events';
 import { RoomSettingsSaveErrorParser } from '../../parser';
 
-export class RoomSettingsSaveErrorEvent extends MessageEvent implements IMessageEvent
+export class RoomSettingsSaveErrorEvent
+  extends MessageEvent
+  implements IMessageEvent
 {
-    constructor(callBack: Function)
-    {
-        super(callBack, RoomSettingsSaveErrorParser);
-    }
+  constructor(callBack: Function) {
+    super(callBack, RoomSettingsSaveErrorParser);
+  }
 
-    public getParser(): RoomSettingsSaveErrorParser
-    {
-        return this.parser as RoomSettingsSaveErrorParser;
-    }
+  public getParser(): RoomSettingsSaveErrorParser {
+    return this.parser as RoomSettingsSaveErrorParser;
+  }
 }

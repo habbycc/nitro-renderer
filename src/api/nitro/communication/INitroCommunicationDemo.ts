@@ -1,3 +1,3 @@
 import { INitroManager } from '../../common';
 
-export type INitroCommunicationDemo = INitroManager
+export type INitroCommunicationDemo = INitroManager;

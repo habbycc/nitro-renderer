@@ -1,21 +1,24 @@
 import { IMessageComposer } from '../../../../../api';
 
-export class ChatReviewGuideDecidesOnOfferMessageComposer implements IMessageComposer<ConstructorParameters<typeof ChatReviewGuideDecidesOnOfferMessageComposer>>
+export class ChatReviewGuideDecidesOnOfferMessageComposer
+  implements
+    IMessageComposer<
+      ConstructorParameters<typeof ChatReviewGuideDecidesOnOfferMessageComposer>
+    >
 {
-    private _data: ConstructorParameters<typeof ChatReviewGuideDecidesOnOfferMessageComposer>;
+  private _data: ConstructorParameters<
+    typeof ChatReviewGuideDecidesOnOfferMessageComposer
+  >;
 
-    constructor(k: boolean)
-    {
-        this._data = [k];
-    }
+  constructor(k: boolean) {
+    this._data = [k];
+  }
 
-    public getMessageArray()
-    {
-        return this._data;
-    }
+  public getMessageArray() {
+    return this._data;
+  }
 
-    public dispose(): void
-    {
-        return;
-    }
+  public dispose(): void {
+    return;
+  }
 }

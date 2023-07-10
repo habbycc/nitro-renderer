@@ -4,193 +4,185 @@ import { IGraphicAssetCollection, IVector3D } from '../../../../../../api';
 import { PlaneMask } from './PlaneMask';
 import { PlaneMaskVisualization } from './PlaneMaskVisualization';
 
-export class PlaneMaskManager
-{
-    private _assetCollection: IGraphicAssetCollection;
-    private _masks: Map<string, PlaneMask>;
-    private _data: any;
+export class PlaneMaskManager {
+  private _assetCollection: IGraphicAssetCollection;
+  private _masks: Map<string, PlaneMask>;
+  private _data: any;
 
-    constructor()
-    {
-        this._assetCollection = null;
-        this._masks = new Map();
-        this._data = null;
+  constructor() {
+    this._assetCollection = null;
+    this._masks = new Map();
+    this._data = null;
+  }
+
+  public get data(): any {
+    return this._data;
+  }
+
+  public dispose(): void {
+    this._assetCollection = null;
+    this._data = null;
+
+    if (this._masks && this._masks.size) {
+      for (const mask of this._masks.values()) {
+        if (!mask) continue;
+
+        mask.dispose();
+      }
+
+      this._masks.clear();
     }
+  }
 
-    public get data(): any
-    {
-        return this._data;
-    }
+  public initialize(k: any): void {
+    this._data = k;
+  }
 
-    public dispose(): void
-    {
-        this._assetCollection = null;
-        this._data = null;
+  public initializeAssetCollection(k: IGraphicAssetCollection): void {
+    if (!this.data) return;
 
-        if(this._masks && this._masks.size)
-        {
-            for(const mask of this._masks.values())
-            {
-                if(!mask) continue;
+    this._assetCollection = k;
 
-                mask.dispose();
-            }
+    this.parseMasks(this.data, k);
+  }
 
-            this._masks.clear();
-        }
-    }
+  private parseMasks(k: any, _arg_2: IGraphicAssetCollection): void {
+    if (!k || !_arg_2) return;
 
-    public initialize(k: any): void
-    {
-        this._data = k;
-    }
+    if (k.masks && k.masks.length) {
+      let index = 0;
 
-    public initializeAssetCollection(k: IGraphicAssetCollection): void
-    {
-        if(!this.data) return;
+      while (index < k.masks.length) {
+        const mask = k.masks[index];
 
-        this._assetCollection = k;
+        if (mask) {
+          const id = mask.id;
+          const existing = this._masks.get(id);
 
-        this.parseMasks(this.data, k);
-    }
+          if (existing) continue;
 
-    private parseMasks(k: any, _arg_2: IGraphicAssetCollection): void
-    {
-        if(!k || !_arg_2) return;
+          const newMask = new PlaneMask();
 
-        if(k.masks && k.masks.length)
-        {
-            let index = 0;
+          if (mask.visualizations && mask.visualizations.length) {
+            let visualIndex = 0;
 
-            while(index < k.masks.length)
-            {
-                const mask = k.masks[index];
+            while (visualIndex < mask.visualizations.length) {
+              const visualization = mask.visualizations[visualIndex];
 
-                if(mask)
-                {
-                    const id = mask.id;
-                    const existing = this._masks.get(id);
+              if (visualization) {
+                const size = visualization.size as number;
+                const maskVisualization = newMask.createMaskVisualization(size);
 
-                    if(existing) continue;
+                if (maskVisualization) {
+                  const assetName = this.parseMaskBitmaps(
+                    visualization.bitmaps,
+                    maskVisualization,
+                    _arg_2,
+                  );
 
-                    const newMask = new PlaneMask();
-
-                    if(mask.visualizations && mask.visualizations.length)
-                    {
-                        let visualIndex = 0;
-
-                        while(visualIndex < mask.visualizations.length)
-                        {
-                            const visualization = mask.visualizations[visualIndex];
-
-                            if(visualization)
-                            {
-                                const size = visualization.size as number;
-                                const maskVisualization = newMask.createMaskVisualization(size);
-
-                                if(maskVisualization)
-                                {
-                                    const assetName = this.parseMaskBitmaps(visualization.bitmaps, maskVisualization, _arg_2);
-
-                                    newMask.setAssetName(size, assetName);
-                                }
-                            }
-
-                            visualIndex++;
-                        }
-                    }
-
-                    this._masks.set(id, newMask);
+                  newMask.setAssetName(size, assetName);
                 }
+              }
 
-                index++;
+              visualIndex++;
             }
-        }
-    }
+          }
 
-    private parseMaskBitmaps(k: any, _arg_2: PlaneMaskVisualization, _arg_3: IGraphicAssetCollection): string
-    {
-        if(!k || !k.length) return null;
-
-        let graphicName: string = null;
-
-        for(const bitmap of k)
-        {
-            if(!bitmap) continue;
-
-            const assetName = bitmap.assetName;
-            const asset = _arg_3.getAsset(assetName);
-
-            if(!asset) continue;
-
-            let normalMinX = PlaneMaskVisualization.MIN_NORMAL_COORDINATE_VALUE;
-            let normalMaxX = PlaneMaskVisualization.MAX_NORMAL_COORDINATE_VALUE;
-            let normalMinY = PlaneMaskVisualization.MIN_NORMAL_COORDINATE_VALUE;
-            let normalMaxY = PlaneMaskVisualization.MAX_NORMAL_COORDINATE_VALUE;
-
-            if(bitmap.normalMinX !== undefined) normalMinX = bitmap.normalMinX;
-            if(bitmap.normalMaxX !== undefined) normalMaxX = bitmap.normalMaxX;
-            if(bitmap.normalMinY !== undefined) normalMinY = bitmap.normalMinY;
-            if(bitmap.normalMaxY !== undefined) normalMaxY = bitmap.normalMaxY;
-
-            if(!asset.flipH) graphicName = assetName;
-
-            _arg_2.addBitmap(asset, normalMinX, normalMaxX, normalMinY, normalMaxY);
+          this._masks.set(id, newMask);
         }
 
-        return graphicName;
+        index++;
+      }
+    }
+  }
+
+  private parseMaskBitmaps(
+    k: any,
+    _arg_2: PlaneMaskVisualization,
+    _arg_3: IGraphicAssetCollection,
+  ): string {
+    if (!k || !k.length) return null;
+
+    let graphicName: string = null;
+
+    for (const bitmap of k) {
+      if (!bitmap) continue;
+
+      const assetName = bitmap.assetName;
+      const asset = _arg_3.getAsset(assetName);
+
+      if (!asset) continue;
+
+      let normalMinX = PlaneMaskVisualization.MIN_NORMAL_COORDINATE_VALUE;
+      let normalMaxX = PlaneMaskVisualization.MAX_NORMAL_COORDINATE_VALUE;
+      let normalMinY = PlaneMaskVisualization.MIN_NORMAL_COORDINATE_VALUE;
+      let normalMaxY = PlaneMaskVisualization.MAX_NORMAL_COORDINATE_VALUE;
+
+      if (bitmap.normalMinX !== undefined) normalMinX = bitmap.normalMinX;
+      if (bitmap.normalMaxX !== undefined) normalMaxX = bitmap.normalMaxX;
+      if (bitmap.normalMinY !== undefined) normalMinY = bitmap.normalMinY;
+      if (bitmap.normalMaxY !== undefined) normalMaxY = bitmap.normalMaxY;
+
+      if (!asset.flipH) graphicName = assetName;
+
+      _arg_2.addBitmap(asset, normalMinX, normalMaxX, normalMinY, normalMaxY);
     }
 
-    public updateMask(k: Graphics, _arg_2: string, _arg_3: number, _arg_4: IVector3D, _arg_5: number, _arg_6: number): boolean
-    {
-        const mask = this._masks.get(_arg_2);
+    return graphicName;
+  }
 
-        if(!mask) return true;
+  public updateMask(
+    k: Graphics,
+    _arg_2: string,
+    _arg_3: number,
+    _arg_4: IVector3D,
+    _arg_5: number,
+    _arg_6: number,
+  ): boolean {
+    const mask = this._masks.get(_arg_2);
 
-        const asset = mask.getGraphicAsset(_arg_3, _arg_4);
+    if (!mask) return true;
 
-        if(!asset) return true;
+    const asset = mask.getGraphicAsset(_arg_3, _arg_4);
 
-        const texture = asset.texture;
+    if (!asset) return true;
 
-        if(!texture) return true;
+    const texture = asset.texture;
 
-        const point = new Point((_arg_5 + asset.offsetX), (_arg_6 + asset.offsetY));
+    if (!texture) return true;
 
-        const matrix = new Matrix();
+    const point = new Point(_arg_5 + asset.offsetX, _arg_6 + asset.offsetY);
 
-        let a = 1;
-        let b = 1;
-        let c = 0;
-        let d = 0;
+    const matrix = new Matrix();
 
-        if(asset.flipH)
-        {
-            a = -1;
-            c = -(texture.width);
-        }
+    let a = 1;
+    let b = 1;
+    let c = 0;
+    let d = 0;
 
-        if(asset.flipV)
-        {
-            b = -1;
-            d = -(texture.height);
-        }
-
-        matrix.scale(a, b);
-        matrix.translate((point.x + c), (point.y + d));
-
-        k
-            .beginTextureFill({ texture, matrix })
-            .drawRect(matrix.tx, matrix.ty, texture.width, texture.height)
-            .endFill();
-
-        return true;
+    if (asset.flipH) {
+      a = -1;
+      c = -texture.width;
     }
 
-    public getMask(k: string): PlaneMask
-    {
-        if(!this._masks || !this._masks.size) return null;
-
-        return this._masks.get(k) || null;
+    if (asset.flipV) {
+      b = -1;
+      d = -texture.height;
     }
+
+    matrix.scale(a, b);
+    matrix.translate(point.x + c, point.y + d);
+
+    k.beginTextureFill({ texture, matrix })
+      .drawRect(matrix.tx, matrix.ty, texture.width, texture.height)
+      .endFill();
+
+    return true;
+  }
+
+  public getMask(k: string): PlaneMask {
+    if (!this._masks || !this._masks.size) return null;
+
+    return this._masks.get(k) || null;
+  }
 }

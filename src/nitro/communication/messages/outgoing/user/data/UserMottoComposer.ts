@@ -1,21 +1,19 @@
 import { IMessageComposer } from '../../../../../../api';
 
-export class UserMottoComposer implements IMessageComposer<ConstructorParameters<typeof UserMottoComposer>>
+export class UserMottoComposer
+  implements IMessageComposer<ConstructorParameters<typeof UserMottoComposer>>
 {
-    private _data: ConstructorParameters<typeof UserMottoComposer>;
+  private _data: ConstructorParameters<typeof UserMottoComposer>;
 
-    constructor(motto: string)
-    {
-        this._data = [motto];
-    }
+  constructor(motto: string) {
+    this._data = [motto];
+  }
 
-    public getMessageArray()
-    {
-        return this._data;
-    }
+  public getMessageArray() {
+    return this._data;
+  }
 
-    public dispose(): void
-    {
-        return;
-    }
+  public dispose(): void {
+    return;
+  }
 }

@@ -1,21 +1,20 @@
 import { IMessageComposer } from '../../../../../api';
 
-export class SearchFaqsMessageComposer implements IMessageComposer<ConstructorParameters<typeof SearchFaqsMessageComposer>>
+export class SearchFaqsMessageComposer
+  implements
+    IMessageComposer<ConstructorParameters<typeof SearchFaqsMessageComposer>>
 {
-    private _data: ConstructorParameters<typeof SearchFaqsMessageComposer>;
+  private _data: ConstructorParameters<typeof SearchFaqsMessageComposer>;
 
-    constructor(k: string)
-    {
-        this._data = [k];
-    }
+  constructor(k: string) {
+    this._data = [k];
+  }
 
-    public getMessageArray()
-    {
-        return this._data;
-    }
+  public getMessageArray() {
+    return this._data;
+  }
 
-    public dispose(): void
-    {
-        return;
-    }
+  public dispose(): void {
+    return;
+  }
 }

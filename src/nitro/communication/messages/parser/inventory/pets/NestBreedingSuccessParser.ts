@@ -1,33 +1,28 @@
 ﻿import { IMessageDataWrapper, IMessageParser } from '../../../../../../api';
 
-export class NestBreedingSuccessParser implements IMessageParser
-{
-    private _rarityCategory: number;
-    private _petId: number;
+export class NestBreedingSuccessParser implements IMessageParser {
+  private _rarityCategory: number;
+  private _petId: number;
 
-    public flush(): boolean
-    {
-        this._petId = -1;
-        this._rarityCategory = -1;
+  public flush(): boolean {
+    this._petId = -1;
+    this._rarityCategory = -1;
 
-        return true;
-    }
+    return true;
+  }
 
-    public parse(k: IMessageDataWrapper): boolean
-    {
-        this._petId = k.readInt();
-        this._rarityCategory = k.readInt();
+  public parse(k: IMessageDataWrapper): boolean {
+    this._petId = k.readInt();
+    this._rarityCategory = k.readInt();
 
-        return true;
-    }
+    return true;
+  }
 
-    public get rarityCategory(): number
-    {
-        return this._rarityCategory;
-    }
+  public get rarityCategory(): number {
+    return this._rarityCategory;
+  }
 
-    public get petId(): number
-    {
-        return this._petId;
-    }
+  public get petId(): number {
+    return this._petId;
+  }
 }

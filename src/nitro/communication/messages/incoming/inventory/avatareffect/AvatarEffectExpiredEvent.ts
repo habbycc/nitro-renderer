@@ -2,15 +2,15 @@
 import { MessageEvent } from '../../../../../../events';
 import { AvatarEffectExpiredParser } from '../../../parser';
 
-export class AvatarEffectExpiredEvent extends MessageEvent implements IMessageEvent
+export class AvatarEffectExpiredEvent
+  extends MessageEvent
+  implements IMessageEvent
 {
-    constructor(callBack: Function)
-    {
-        super(callBack, AvatarEffectExpiredParser);
-    }
+  constructor(callBack: Function) {
+    super(callBack, AvatarEffectExpiredParser);
+  }
 
-    public getParser(): AvatarEffectExpiredParser
-    {
-        return this.parser as AvatarEffectExpiredParser;
-    }
+  public getParser(): AvatarEffectExpiredParser {
+    return this.parser as AvatarEffectExpiredParser;
+  }
 }

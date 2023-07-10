@@ -1,43 +1,39 @@
 import { IMessageDataWrapper, IMessageParser } from '../../../../../api';
 
-export class CatalogPageWithEarliestExpiryMessageParser implements IMessageParser
+export class CatalogPageWithEarliestExpiryMessageParser
+  implements IMessageParser
 {
-    private _pageName: string;
-    private _Str_5158: number;
-    private _image: string;
+  private _pageName: string;
+  private _Str_5158: number;
+  private _image: string;
 
-    public flush(): boolean
-    {
-        this._pageName = null;
-        this._Str_5158 = 0;
-        this._image = null;
+  public flush(): boolean {
+    this._pageName = null;
+    this._Str_5158 = 0;
+    this._image = null;
 
-        return true;
-    }
+    return true;
+  }
 
-    public parse(wrapper: IMessageDataWrapper): boolean
-    {
-        if(!wrapper) return false;
+  public parse(wrapper: IMessageDataWrapper): boolean {
+    if (!wrapper) return false;
 
-        this._pageName = wrapper.readString();
-        this._Str_5158 = wrapper.readInt();
-        this._image = wrapper.readString();
+    this._pageName = wrapper.readString();
+    this._Str_5158 = wrapper.readInt();
+    this._image = wrapper.readString();
 
-        return true;
-    }
+    return true;
+  }
 
-    public get pageName(): string
-    {
-        return this._pageName;
-    }
+  public get pageName(): string {
+    return this._pageName;
+  }
 
-    public get _Str_17123(): number
-    {
-        return this._Str_5158;
-    }
+  public get _Str_17123(): number {
+    return this._Str_5158;
+  }
 
-    public get image(): string
-    {
-        return this._image;
-    }
+  public get image(): string {
+    return this._image;
+  }
 }
