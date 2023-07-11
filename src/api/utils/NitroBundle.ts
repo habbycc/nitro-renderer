@@ -23,7 +23,7 @@ export class NitroBundle {
     while (fileCount > 0) {
       const fileNameLength = binaryReader.readShort();
       const fileName = binaryReader.readBytes(fileNameLength).toString();
-      const fileLength = binaryReader.readInt();
+      const fileLength = binaryReader.readLength();
       const buffer = binaryReader.readBytes(fileLength);
 
       if (fileName.endsWith(".json")) {

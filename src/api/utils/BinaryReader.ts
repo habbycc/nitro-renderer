@@ -73,4 +73,8 @@ export class BinaryReader implements IBinaryReader {
   public toArrayBuffer(): ArrayBuffer {
     return this._dataView.buffer;
   }
+
+  public readLength(): number {
+    return this._dataView.byteLength;
+  }
 }
