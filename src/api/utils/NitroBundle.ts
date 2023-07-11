@@ -1,10 +1,10 @@
-import { BaseTexture } from '@pixi/core';
-import { Data, inflate } from 'pako';
-import { ArrayBufferToBase64 } from './ArrayBufferToBase64';
-import { BinaryReader } from './BinaryReader';
+import { BaseTexture } from "@pixi/core";
+import { Data, inflate } from "pako";
+import { ArrayBufferToBase64 } from "./ArrayBufferToBase64";
+import { BinaryReader } from "./BinaryReader";
 
 export class NitroBundle {
-  private static TEXT_DECODER: TextDecoder = new TextDecoder('utf-8');
+  private static TEXT_DECODER: TextDecoder = new TextDecoder("utf-8");
 
   private _jsonFile: Object = null;
   private _image: string = null;
@@ -26,7 +26,7 @@ export class NitroBundle {
       const fileLength = binaryReader.readInt();
       const buffer = binaryReader.readBytes(fileLength);
 
-      if (fileName.endsWith('.json')) {
+      if (fileName.endsWith(".json")) {
         const decompressed = inflate(buffer.toArrayBuffer() as Data);
 
         this._jsonFile = JSON.parse(
@@ -36,7 +36,7 @@ export class NitroBundle {
         const decompressed = inflate(buffer.toArrayBuffer() as Data);
         const base64 = ArrayBufferToBase64(decompressed);
 
-        this._baseTexture = new BaseTexture('data:image/png;base64,' + base64);
+        this._baseTexture = new BaseTexture("data:image/png;base64," + base64);
       }
 
       fileCount--;

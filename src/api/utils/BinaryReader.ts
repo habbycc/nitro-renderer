@@ -1,4 +1,4 @@
-import { IBinaryReader } from './IBinaryReader';
+import { IBinaryReader } from "./IBinaryReader";
 
 export class BinaryReader implements IBinaryReader {
   private _position: number;
@@ -36,8 +36,11 @@ export class BinaryReader implements IBinaryReader {
   }
 
   public readInt(): number {
-    const int = this._dataView.getInt32(this._position);
+    if (this._position + 4 > this._dataView.byteLength) {
+      throw new Error("Attempted to read beyond the end of the DataView");
+    }
 
+    const int = this._dataView.getInt32(this._position);
     this._position += 4;
 
     return int;
