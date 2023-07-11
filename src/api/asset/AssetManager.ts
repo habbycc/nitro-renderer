@@ -1,13 +1,13 @@
-import { BaseTexture, Resource, Texture } from '@pixi/core';
-import { Loader, LoaderResource } from '@pixi/loaders';
-import { Spritesheet } from '@pixi/spritesheet';
-import { NitroLogger } from '../common';
-import { ArrayBufferToBase64, NitroBundle } from '../utils';
-import { GraphicAssetCollection } from './GraphicAssetCollection';
-import { IAssetData } from './IAssetData';
-import { IAssetManager } from './IAssetManager';
-import { IGraphicAsset } from './IGraphicAsset';
-import { IGraphicAssetCollection } from './IGraphicAssetCollection';
+import { BaseTexture, Resource, Texture } from "@pixi/core";
+import { Loader, LoaderResource } from "@pixi/loaders";
+import { Spritesheet } from "@pixi/spritesheet";
+import { NitroLogger } from "../common";
+import { ArrayBufferToBase64, NitroBundle } from "../utils";
+import { GraphicAssetCollection } from "./GraphicAssetCollection";
+import { IAssetData } from "./IAssetData";
+import { IAssetManager } from "./IAssetManager";
+import { IGraphicAsset } from "./IGraphicAsset";
+import { IGraphicAssetCollection } from "./IGraphicAssetCollection";
 
 export class AssetManager implements IAssetManager {
   public static _INSTANCE: IAssetManager = new AssetManager();
@@ -97,7 +97,7 @@ export class AssetManager implements IAssetManager {
 
       loader.add({
         url,
-        crossOrigin: 'anonymous',
+        crossOrigin: "anonymous",
         loadType: LoaderResource.LOAD_TYPE.XHR,
         xhrType: LoaderResource.XHR_RESPONSE_TYPE.BUFFER,
       });
@@ -107,7 +107,7 @@ export class AssetManager implements IAssetManager {
 
     const onDownloaded = (status: boolean, url: string) => {
       if (!status) {
-        NitroLogger.error('Failed to download asset', url);
+        NitroLogger.error("Failed to download asset", url);
 
         loader.destroy();
 
@@ -133,15 +133,14 @@ export class AssetManager implements IAssetManager {
 
         if (!resource || resource.error || !resource.xhr) {
           onDownloaded(false, resource.url);
-
           return;
         }
 
         const resourceType =
-          resource.xhr.getResponseHeader('Content-Type') ||
-          'application/octet-stream';
+          resource.xhr.getResponseHeader("Content-Type") ||
+          "application/octet-stream";
 
-        if (resourceType === 'application/octet-stream') {
+        if (resourceType === "application/octet-stream") {
           const nitroBundle = new NitroBundle(resource.data);
 
           this.processAsset(
@@ -156,9 +155,9 @@ export class AssetManager implements IAssetManager {
         }
 
         if (
-          resourceType === 'image/png' ||
-          resourceType === 'image/jpeg' ||
-          resourceType === 'image/gif'
+          resourceType === "image/png" ||
+          resourceType === "image/jpeg" ||
+          resourceType === "image/gif"
         ) {
           const base64 = ArrayBufferToBase64(resource.data);
           const baseTexture = new BaseTexture(
@@ -172,7 +171,7 @@ export class AssetManager implements IAssetManager {
 
             onDownloaded(true, resource.url);
           } else {
-            baseTexture.once('update', () => {
+            baseTexture.once("update", () => {
               const texture = new Texture(baseTexture);
 
               this.setTexture(resource.name, texture);
@@ -221,7 +220,7 @@ export class AssetManager implements IAssetManager {
     if (baseTexture.valid) {
       createAsset();
     } else {
-      baseTexture.once('update', () => createAsset());
+      baseTexture.once("update", () => createAsset());
     }
   }
 
