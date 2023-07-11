@@ -1,12 +1,11 @@
-import { RenderTexture, Texture } from '@pixi/core';
-import { Container, DisplayObject } from '@pixi/display';
-import { Point, Rectangle } from '@pixi/math';
-import { Sprite } from '@pixi/sprite';
+import { RenderTexture, Texture } from "@pixi/core";
+import { Container, DisplayObject } from "@pixi/display";
+import { Point, Rectangle } from "@pixi/math";
+import { Sprite } from "@pixi/sprite";
 import {
   IGetImageListener,
   IImageResult,
   IObjectData,
-  IRoomEngine,
   IRoomObjectController,
   IRoomRenderingCanvas,
   IVector3D,
@@ -15,18 +14,18 @@ import {
   RoomObjectUserType,
   RoomObjectVariable,
   Vector3d,
-} from '../../../api';
-import { RoomEngineEvent, RoomEngineObjectEvent } from '../../../events';
-import { GetTickerTime, NitroSprite } from '../../../pixi-proxy';
-import { RoomId } from '../../../room';
+} from "../../../api";
+import { RoomEngineEvent, RoomEngineObjectEvent } from "../../../events";
+import { GetTickerTime, NitroSprite } from "../../../pixi-proxy";
+import { RoomId } from "../../../room";
 import {
   FloorHeightMapMessageParser,
   RoomEntryTileMessageParser,
-} from '../../communication';
-import { ObjectRoomMapUpdateMessage } from '../messages';
-import { RoomPlaneParser } from '../object/RoomPlaneParser';
-import { RoomEngine } from '../RoomEngine';
-import { LegacyWallGeometry } from '../utils/LegacyWallGeometry';
+} from "../../communication";
+import { RoomEngine } from "../RoomEngine";
+import { ObjectRoomMapUpdateMessage } from "../messages";
+import { RoomPlaneParser } from "../object/RoomPlaneParser";
+import { LegacyWallGeometry } from "../utils/LegacyWallGeometry";
 
 export class RoomPreviewer {
   public static SCALE_NORMAL: number = 64;
@@ -41,12 +40,12 @@ export class RoomPreviewer {
   private static AUTOMATIC_STATE_CHANGE_INTERVAL: number = 2500;
   private static ZOOM_ENABLED: boolean = true;
 
-  private _roomEngine: IRoomEngine;
+  private _roomEngine: RoomEngine;
   private _planeParser: RoomPlaneParser;
   private _previewRoomId: number = 1;
   private _currentPreviewObjectType: number = 0;
   private _currentPreviewObjectCategory: number = 0;
-  private _currentPreviewObjectData: string = '';
+  private _currentPreviewObjectData: string = "";
   private _currentPreviewRectangle: Rectangle = null;
   private _currentPreviewCanvasWidth: number = 0;
   private _currentPreviewCanvasHeight: number = 0;
@@ -59,7 +58,7 @@ export class RoomPreviewer {
   private _backgroundSprite: Sprite = null;
   private _disableUpdate: boolean = false;
 
-  constructor(roomEngine: IRoomEngine, roomId: number = 1) {
+  constructor(roomEngine: RoomEngine, roomId: number = 1) {
     this._roomEngine = roomEngine;
     this._planeParser = new RoomPlaneParser();
     this._previewRoomId = RoomId.makeRoomPreviewerId(roomId);
@@ -182,10 +181,9 @@ export class RoomPreviewer {
     parser.flush();
     parser.parseModel(model, wallHeight, scale);
 
-    //@ts-ignore
-    const wallGeometry = (
-      this._roomEngine as IRoomCreator
-    ).getLegacyWallGeometry(this._previewRoomId);
+    const wallGeometry = this._roomEngine.getLegacyWallGeometry(
+      this._previewRoomId,
+    );
 
     if (!wallGeometry) return;
 
@@ -307,7 +305,7 @@ export class RoomPreviewer {
 
       this._currentPreviewObjectType = classId;
       this._currentPreviewObjectCategory = RoomObjectCategory.FLOOR;
-      this._currentPreviewObjectData = '';
+      this._currentPreviewObjectData = "";
 
       if (
         this._roomEngine.addFurnitureFloor(
@@ -326,7 +324,7 @@ export class RoomPreviewer {
           -1,
           0,
           -1,
-          '',
+          "",
           true,
           false,
         )
@@ -383,7 +381,7 @@ export class RoomPreviewer {
           0,
           0,
           -1,
-          '',
+          "",
           false,
         )
       ) {
@@ -427,7 +425,7 @@ export class RoomPreviewer {
 
         this.updateUserGesture(1);
         this.updateUserEffect(effect);
-        this.updateUserPosture('std');
+        this.updateUserPosture("std");
       }
 
       this.updatePreviewRoomView();
@@ -465,7 +463,7 @@ export class RoomPreviewer {
         this._automaticStateChange = false;
 
         this.updateUserGesture(1);
-        this.updateUserPosture('std');
+        this.updateUserPosture("std");
       }
 
       this.updatePreviewRoomView();
@@ -476,7 +474,7 @@ export class RoomPreviewer {
     return -1;
   }
 
-  public updateUserPosture(type: string, parameter: string = ''): void {
+  public updateUserPosture(type: string, parameter: string = ""): void {
     if (this.isRoomEngineReady)
       this._roomEngine.updateRoomObjectUserPosture(
         this._previewRoomId,
@@ -1033,8 +1031,8 @@ export class RoomPreviewer {
         if (event.roomId === this._previewRoomId && this.isRoomEngineReady) {
           this._roomEngine.updateRoomInstancePlaneType(
             this._previewRoomId,
-            '110',
-            '99999',
+            "110",
+            "99999",
           );
         }
         return;
