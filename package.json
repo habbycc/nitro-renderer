@@ -53,10 +53,12 @@
     "@pixi/utils": "~6.4.2",
     "gifuct-js": "^2.1.2",
     "howler": "^2.2.3",
-    "pako": "^2.0.4"
+    "pako": "^2.0.4",
+    "winston": "^3.10.0"
   },
   "devDependencies": {
     "@types/howler": "^2.2.7",
+    "@types/node": "^20.4.4",
     "@types/pako": "^1.0.3",
     "@typescript-eslint/eslint-plugin": "^5.30.7",
     "@typescript-eslint/parser": "^5.30.7",
