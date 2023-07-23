@@ -4,19 +4,19 @@ import {
   INitroEvent,
   NitroConfiguration,
   NitroLogger,
-} from '../../api';
-import { EventDispatcher } from '../../core';
+} from "../../api";
+import { EventDispatcher } from "../../core";
 import {
   AvatarRenderEffectLibraryEvent,
   AvatarRenderEvent,
   NitroEvent,
-} from '../../events';
-import { AvatarStructure } from './AvatarStructure';
-import { EffectAssetDownloadLibrary } from './EffectAssetDownloadLibrary';
+} from "../../events";
+import { AvatarStructure } from "./AvatarStructure";
+import { EffectAssetDownloadLibrary } from "./EffectAssetDownloadLibrary";
 
 export class EffectAssetDownloadManager extends EventDispatcher {
-  public static DOWNLOADER_READY: string = 'EADM_DOWNLOADER_READY';
-  public static LIBRARY_LOADED: string = 'EADM_LIBRARY_LOADED';
+  public static DOWNLOADER_READY: string = "EADM_DOWNLOADER_READY";
+  public static LIBRARY_LOADED: string = "EADM_LIBRARY_LOADED";
 
   private static MAX_DOWNLOADS: number = 2;
 
@@ -40,7 +40,7 @@ export class EffectAssetDownloadManager extends EventDispatcher {
     this._structure = structure;
 
     this._missingMandatoryLibs = NitroConfiguration.getValue<string[]>(
-      'avatar.mandatory.effect.libraries',
+      "avatar.mandatory.effect.libraries",
     );
     this._effectMap = new Map();
     this._effectListeners = new Map();
@@ -67,8 +67,8 @@ export class EffectAssetDownloadManager extends EventDispatcher {
 
     try {
       request.open(
-        'GET',
-        NitroConfiguration.getValue<string>('avatar.effectmap.url'),
+        "GET",
+        NitroConfiguration.getValue<string>("avatar.effectmap.url"),
       );
 
       request.send();
@@ -90,7 +90,7 @@ export class EffectAssetDownloadManager extends EventDispatcher {
       };
 
       request.onerror = (e) => {
-        throw new Error('invalid_avatar_effect_map');
+        throw new Error("invalid_avatar_effect_map");
       };
     } catch (e) {
       NitroLogger.error(e);
@@ -105,7 +105,7 @@ export class EffectAssetDownloadManager extends EventDispatcher {
 
       const id = effect.id as string;
       const lib = effect.lib as string;
-      const revision = effect.revision || '';
+      const revision = effect.revision || "";
 
       if (this._libraryNames.indexOf(lib) >= 0) continue;
 
@@ -115,7 +115,7 @@ export class EffectAssetDownloadManager extends EventDispatcher {
         lib,
         revision,
         this._assets,
-        NitroConfiguration.getValue<string>('avatar.asset.effect.url'),
+        NitroConfiguration.getValue<string>("avatar.asset.effect.url"),
       );
 
       downloadLibrary.addEventListener(

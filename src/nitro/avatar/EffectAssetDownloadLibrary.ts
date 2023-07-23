@@ -2,15 +2,15 @@ import {
   IAssetAnimation,
   IAssetManager,
   IEffectAssetDownloadLibrary,
-} from '../../api';
-import { EventDispatcher } from '../../core';
-import { AvatarRenderEffectLibraryEvent } from '../../events';
+} from "../../api";
+import { EventDispatcher } from "../../core";
+import { AvatarRenderEffectLibraryEvent } from "../../events";
 
 export class EffectAssetDownloadLibrary
   extends EventDispatcher
   implements IEffectAssetDownloadLibrary
 {
-  public static DOWNLOAD_COMPLETE: string = 'EADL_DOWNLOAD_COMPLETE';
+  public static DOWNLOAD_COMPLETE: string = "EADL_DOWNLOAD_COMPLETE";
 
   private static NOT_LOADED: number = 0;
   private static LOADING: number = 1;

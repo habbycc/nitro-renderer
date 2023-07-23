@@ -1,20 +1,20 @@
-import { RenderTexture, Resource, Texture } from '@pixi/core';
-import { Graphics } from '@pixi/graphics';
-import { Matrix, Point, Rectangle } from '@pixi/math';
+import { RenderTexture, Resource, Texture } from "@pixi/core";
+import { Graphics } from "@pixi/graphics";
+import { Matrix, Point, Rectangle } from "@pixi/math";
 import {
   IRoomGeometry,
   IRoomPlane,
   IVector3D,
   Vector3d,
-} from '../../../../../api';
-import { NitroRenderTexture, TextureUtils } from '../../../../../pixi-proxy';
-import { PlaneMaskManager } from './mask';
-import { PlaneDrawingData } from './PlaneDrawingData';
-import { IPlaneRasterizer, PlaneVisualizationLayer } from './rasterizer';
-import { RoomPlaneBitmapMask } from './RoomPlaneBitmapMask';
-import { RoomPlaneRectangleMask } from './RoomPlaneRectangleMask';
-import { RoomVisualization } from './RoomVisualization';
-import { PlaneBitmapData, Randomizer } from './utils';
+} from "../../../../../api";
+import { NitroRenderTexture, TextureUtils } from "../../../../../pixi-proxy";
+import { PlaneDrawingData } from "./PlaneDrawingData";
+import { RoomPlaneBitmapMask } from "./RoomPlaneBitmapMask";
+import { RoomPlaneRectangleMask } from "./RoomPlaneRectangleMask";
+import { RoomVisualization } from "./RoomVisualization";
+import { PlaneMaskManager } from "./mask";
+import { IPlaneRasterizer, PlaneVisualizationLayer } from "./rasterizer";
+import { PlaneBitmapData, Randomizer } from "./utils";
 
 export class RoomPlane implements IRoomPlane {
   private static ZERO_POINT: Point = new Point(0, 0);
@@ -279,7 +279,6 @@ export class RoomPlane implements IRoomPlane {
 
     if (this._maskBitmapData) {
       this._maskBitmapData.destroy();
-
       this._maskBitmapData = null;
     }
 
@@ -514,7 +513,7 @@ export class RoomPlane implements IRoomPlane {
               }
 
               if (assetNames.length > 0) {
-                if (!column.isRepeated()) assetNames.push('');
+                if (!column.isRepeated()) assetNames.push("");
 
                 data.addAssetColumn(assetNames);
               }
@@ -1039,7 +1038,7 @@ export class RoomPlane implements IRoomPlane {
 
     const maskCanvas = TextureUtils.generateCanvas(mask);
     const textureCanvas = TextureUtils.generateCanvas(texture);
-    const textureCtx = textureCanvas.getContext('2d');
+    const textureCtx = textureCanvas.getContext("2d");
 
     textureCtx.drawImage(maskCanvas, 0, 0);
 
